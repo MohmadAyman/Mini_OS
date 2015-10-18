@@ -68,9 +68,9 @@ $(OBJDIR)/kern/init.o: override KERN_CFLAGS+=$(INIT_CFLAGS)
 $(OBJDIR)/kern/init.o: $(OBJDIR)/.vars.INIT_CFLAGS
 
 $(OBJDIR)/kern/%.o: user/%.c $(OBJDIR)/.vars.KERN_CFLAGS
-@echo + cc $<
-@mkdir -p $(@D)
-$(V)$(CC) -nostdinc $(KERN_CFLAGS) -c -o $@ $<
+	@echo + cc $<
+	@mkdir -p $(@D)
+	$(V)$(CC) -nostdinc $(KERN_CFLAGS) -c -o $@ $<
 
 # How to build the kernel itself
 $(OBJDIR)/kern/kernel: $(KERN_OBJFILES) $(KERN_BINFILES) kern/kernel.ld \

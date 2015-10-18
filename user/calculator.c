@@ -80,19 +80,19 @@ Float Getnumber(char* str, int* i)
 
 
 		y = 1;
-	number[0] = str[i];
+	number[0] = str[*i];
 	i++;
-	while (i < strlen(str))
+	while (*i < strlen(str))
 	{
-		if (Isnumber(str[i]))
+		if (Isnumber(str[*i]))
 		{
-			number[y] = str[i];
+			number[y] = str[*i];
 			y++;
 			i++;
 		}
-		else if (Isdot((str[i])) && dot)
+		else if (Isdot((str[*i])) && dot)
 		{
-			number[y] = str[i];
+			number[y] = str[*i];
 			dot--;
 			y++;
 			i++;
@@ -114,10 +114,10 @@ Float Getnumber(char* str, int* i)
 Char GetOperation(char* str, int* i)
 { 
 	Char operat; 
-	if (str[i] == '-' || str[i] == '+' || str[i] == '*' || str[i] == '/' || str[i] == '%')
+	if (str[*i] == '-' || str[*i] == '+' || str[*i] == '*' || str[*i] == '/' || str[*i] == '%')
 	{
 		operat.error = 0;
-		operat.value = str[i];
+		operat.value = str[*i];
 		return operat;
 	}
 	else
