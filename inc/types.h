@@ -39,6 +39,24 @@ typedef int32_t ssize_t;
 // off_t is used for file offsets and lengths.
 typedef int32_t off_t;
 
+// Custome types
+typedef struct{
+	float number;
+	int error;
+}Float;
+
+typedef struct
+{
+	int position;
+	char operant;
+}operantion;
+
+typedef struct
+{
+	char value;
+	int error;
+}Char;
+
 // Efficient min and max operations
 #define MIN(_a, _b)						\
 ({								\

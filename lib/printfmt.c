@@ -38,6 +38,7 @@ printnum(void (*putch)(int, void*), void *putdat,
 {
 	// first recursively print all preceding (more significant) digits
 	if (num >= base) {
+                               
 		printnum(putch, putdat, num / base, base, width - 1, padc);
 	} else {
 		// print any needed pad characters before first digit
@@ -47,6 +48,25 @@ printnum(void (*putch)(int, void*), void *putdat,
 
 	// then print this (the least significant) digit
 	putch("0123456789abcdef"[num % base], putdat);
+       
+}
+static void
+printnum2(void (*putch)(int, void*), void *putdat,
+	 double num_float, unsigned base, int width, int padc)
+{      
+	// first recursively print all preceding (more significant) digits
+	if (num_float >= base) { 
+		printnum2(putch, putdat, num_float / base, base, width - 1, padc);
+	} else {
+		// print any needed pad characters before first digit
+		while (--width > 0)
+			putch(padc, putdat);
+	}
+        int x =(int)num_float;
+	// then print this (the least significant) digit
+	putch("0123456789abcdef"[x % base], putdat);
+        if ( width == -3) {
+        putch('.',putdat);}
 }
 
 // Get an unsigned int of various possible sizes from a varargs list,
@@ -76,6 +96,7 @@ getint(va_list *ap, int lflag)
 }
 
 
+
 // Main function to format and print a string.
 void printfmt(void (*putch)(int, void*), void *putdat, const char *fmt, ...);
 
@@ -85,6 +106,7 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 	register const char *p;
 	register int ch, err;
 	unsigned long long num;
+        double num_float;
 	int base, lflag, width, precision, altflag;
 	char padc;
 
@@ -203,6 +225,19 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 			base = 10;
 			goto number;
 
+               // signed float
+		case 'f':
+			num_float = va_arg(ap, double);
+                        num_float = num_float*100;
+			if ( num_float < 0) {
+				putch('-', putdat);
+				num_float = - num_float;
+			}
+			base = 10;
+                        
+			printnum2(putch, putdat, num_float, base, width, padc);
+			break;
+
 		// (unsigned) octal
 		case 'o':
 			// Replace this with your code.
@@ -296,5 +331,3 @@ snprintf(char *buf, int n, const char *fmt, ...)
 
 	return rc;
 }
-
-
