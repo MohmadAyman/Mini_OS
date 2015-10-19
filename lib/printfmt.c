@@ -67,6 +67,8 @@ printnum2(void (*putch)(int, void*), void *putdat,
 	putch("0123456789abcdef"[x % base], putdat);
         if ( width == -3) {
         putch('.',putdat);}
+        if ( width == -4 && num_float<10)
+        putch('.',putdat);
 }
 
 // Get an unsigned int of various possible sizes from a varargs list,
