@@ -27,7 +27,7 @@ void removeItem(float str[] , int location);
 
 Float Getnumber(char* str, int* i);
 
-Char GetOperation(char* str, int* i);
+Char GetOperation(char* str, int i);
 
 void clearnumber(char * number);
 
