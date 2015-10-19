@@ -87,11 +87,10 @@ Float Getnumber(char* str, int *i)
 {
 	Float Value;
 	int dot = 1;
-	int y = 0;
+	int y = 1;
 	char number[100];
 	number[strlen(str)] = '\0';
 	clearnumber(number);
-			y = 1;
 	number[0] = str[*i];
 	*i++;
 	while (*i < strlen(str))
@@ -108,6 +107,14 @@ Float Getnumber(char* str, int *i)
 			dot--;
 			y++;
 			*i++;
+		}
+		else if ( Isoperation(str[*i])) )
+	        {
+		if (dot)
+	             {
+         	number[y] = '.';
+	             }
+	             break;
 		}
 		else
 		{
@@ -206,7 +213,7 @@ int calculator()
 	}
 	cprintf("Expression:");
 	char *op  = readline("");
-	char number[100];
+	char number[256];
 	number[strlen(op)] = '\0';
 	clearnumber(number);
 	i = 0;
