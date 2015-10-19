@@ -31,10 +31,23 @@ Float char_to_float(char* arg)
 	{
 		if (*(arg) == '.')
 		{
-//			after the point
+			if (!(arg+1))
+			{
+				retval.error=1;
+				return retval;
+			}
 			a = a + (*(arg+1) - '0') * 0.1;
-			cprintf("entered val %f",a);
+				if ((arg+2)!= NULL)
+				{
+								a = a + (*(arg+2) - '0') * 0.1;
+				}
+				else
+				{
+					retval.error=1; 
+					return retval;
+				}
 			retval.number=a;
+			cprintf("entered val %f",a);
 			return retval;
 		}
 		if (*(arg)=='-')

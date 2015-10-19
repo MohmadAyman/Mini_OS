@@ -74,21 +74,25 @@ void removeItem(float str[], int location)
 
 
 Float Getnumber(char* str, int *i)
-{       int x = 0;
+{   
+	cprintf("inside getnumber");    
+	int x = 0;
 	Float Value;
 	int dot = 1;
 	int y = 1;
 	char number[100];
-	for(x = 0 ;x < 100; i++)
+	for(x = 0 ;x < 100; x++)
 	{
-	number[x] = '0';	
+	number[x] = '0';
 	}
-	
+	cprintf("before before Getnumber loop");
 	number[strlen(str)] = '\0';
 	number[0] = str[*i];
 	*i=*i+1;
+	cprintf("before Getnumber loop");
 	while (*i < strlen(str))
 	{
+	cprintf("inside Getnumber loop");
 		if (Isnumber(str[*i]))
 		{
 			number[y] = str[*i];
@@ -193,7 +197,6 @@ int calculator()
 	float A[6];
 	int i = 0;
 
-
 	operantion numericop[6];
 
 	operantion oper;
@@ -228,7 +231,9 @@ int calculator()
 
 	while (i < strlen(op))
 	{
+		cprintf("inside main loop");
 		Float answer_num = Getnumber(op, &i);
+		cprintf("outside getnumber");
 		if (answer_num.error)
 		{
 			cprintf("error");
@@ -261,13 +266,12 @@ int calculator()
 				numericop[operantnum].position = Operation_Position;
 				operantnum++;
 				i++;
-
 			}
 			Operation_Position++;
 		}
 
 	}
-
+	cprintf(" float A array %f\n %f\n %f\n %f\n %f\n %f\n",A[0],A[1],A[2],A[3],A[4],A[5]);
 	calc(A, numericop);
 	return 0;
 
