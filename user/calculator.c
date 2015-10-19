@@ -88,7 +88,7 @@ Float Getnumber(char* str, int *i)
 	Float Value;
 	int dot = 1;
 	int y = 0;
-	char* number = (char*)malloc(strlen(str) + 1);
+	char number[100];
 	number[strlen(str)] = '\0';
 	clearnumber(number);
 			y = 1;
@@ -155,7 +155,7 @@ void calc(float numbers[], operantion op[])
 		{
 			if (numbers[op[i].position == 0])
 			{
-				printf("error");
+				cprintf("error");
 				return;
 			}
 			numbers[op[i].position - 1] = numbers[op[i].position - 1] / numbers[op[i].position];
@@ -164,7 +164,7 @@ void calc(float numbers[], operantion op[])
 		{
 			if (numbers[op[i].position == 0])
 			{
-				printf("error");
+				cprintf("error");
 				return;
 			}
 		int y = (int)(numbers[op[i].position - 1] / numbers[op[i].position]);
@@ -180,7 +180,7 @@ void calc(float numbers[], operantion op[])
 	{
 		result = result + numbers[i];
 	}
-	printf("%f", result);
+	cprintf("%f", result);
 
 }
 
@@ -204,20 +204,20 @@ int calculator()
 		numericop[i].operant ='0';
 		numericop[i].position = 0 ;
 	}
-	printf("Expression:");
+	cprintf("Expression:");
 	char *op  = readline("");
-	char *number = (char*)malloc(strlen(op)+1);
+	char number[100];
 	number[strlen(op)] = '\0';
 	clearnumber(number);
 	i = 0;
 	if (!(op[0] != '-' || Isnumber(op[0])))
 	{
-		printf("error");
+		cprintf("error");
 		return -1;
 	}
 	if (!(Isnumber(op[strlen(op) - 1]) || Isdot(op[strlen(op) - 1])))
 	{
-		printf("error");
+		cprintf("error");
 		return -1;
 	}
 
@@ -226,7 +226,7 @@ int calculator()
 		Float answer_num = Getnumber(op, &i);
 		if (answer_num.error)
 		{
-			printf("error");
+			cprintf("error");
 			return -1;
 		}
 		else
@@ -241,7 +241,7 @@ int calculator()
 		Char answer_char = GetOperation(op, i);
 		if (answer_char.error)
 		{
-			printf("error");
+			cprintf("error");
 			return -1;
 		}
 		else
