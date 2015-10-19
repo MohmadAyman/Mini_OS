@@ -25,8 +25,8 @@ struct Command {
 
 static struct Command commands[] = {
 	{ "help", "Display this list of commands", mon_help },
-	{ "calc", "Capital to small and small to Capital", calca },
-	{ "kerninfo", "Display information about the kernel", mon_kerninfo },
+	{ "c", "Capital to small and small to Capital", calca },
+	{ "f", "Display information about the kernel", first_lab },
 };
 #define NCOMMANDS (sizeof(commands)/sizeof(commands[0]))
 
@@ -97,22 +97,38 @@ first_lab(int argc, char **argv, struct Trapframe *tf)
 //		float* a=(float*)c;
 //		out=(char*)a;
 ///////////////////////////////////////// */
-	char *in= NULL;
-	char* arg;
-
-	arg = readline(in);
+char *arg=NULL;
+	arg=readline("");
 	int len=strlen(arg);
 	short neg = 0;
 	int i=0;
 	double a = 0;
+
+	Float retval;
+	retval.error=0;
+
 	while (i<len)
 	{
 		if (*(arg) == '.')
 		{
-//			after the point
+			if (!(arg+1))
+			{
+				retval.error=1;
+				return 0;
+			}
 			a = a + (*(arg+1) - '0') * 0.1;
+				if ((arg+2)!= NULL)
+				{
+								a = a + (*(arg+2) - '0') * 0.1;
+				}
+				else
+				{
+					retval.error=1; 
+					return 0;
+				}
+			retval.number=a;
 			cprintf("entered val %f",a);
-			return 0;
+			return retval.number;
 		}
 		if (*(arg)=='-')
 		{
@@ -120,6 +136,7 @@ first_lab(int argc, char **argv, struct Trapframe *tf)
 		}
 		else if (*(arg) < '0' || (*(arg) > '9'))
 		{
+			retval.error = 1;
 			cprintf("Invalid Argument");
 			//operation or invalid argument
 		}
@@ -130,6 +147,15 @@ first_lab(int argc, char **argv, struct Trapframe *tf)
 		arg=arg+1;
 	}
 
+	if (neg==1)
+	{
+		float b=a*-1;
+		retval.number=b;
+	}
+	else
+	{
+		retval.number=a;
+	}
 	cprintf("entered val %f",a);
 	return 0;
 }
