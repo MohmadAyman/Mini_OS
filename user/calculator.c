@@ -86,21 +86,21 @@ Float Getnumber(char* str, int *i)
 	
 	number[strlen(str)] = '\0';
 	number[0] = str[*i];
-	*i++;
+	*i=*i+1;
 	while (*i < strlen(str))
 	{
 		if (Isnumber(str[*i]))
 		{
 			number[y] = str[*i];
 			y++;
-			*i++;
+			*i=*i+1;
 		}
 		else if (Isdot((str[*i])) && dot)
 		{
 			number[y] = str[*i];
 			dot--;
 			y++;
-			*i++;
+			*i=*i+1;
 		}
 		else if ( Isoperation(str[*i]) )
 	        {
