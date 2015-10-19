@@ -67,7 +67,7 @@ void removeItem(float str[], int location)
 		str[i] = str[i + 1];
 	}
 
-	str[6] = 0;
+	str[5] = 0;
 
 }
 
