@@ -9,10 +9,12 @@
 #include <kern/kdebug.h>
 #include <inc/calculator.h>
 
+
+
 void subtract_List_Operation(operantion op[])
 {
 	int i;
-	for (i = 0; i < sizeof(op); i++)
+	for (i = 0; i < 6; i++)
 	{
 		op[i].position = op[i].position - 1;
 	}
@@ -33,7 +35,7 @@ int Isoperation(char r)
 
 int Isnumber(char r)
 {
-	if (r >= '0' && r <= '9' )
+	if (r >= '0' && r <= '9')
 	{
 		return 1;
 	}
@@ -56,46 +58,56 @@ int Isdot(char r)
 
 }
 
-void removeItem(float str[] , int location)
+void removeItem(float str[], int location)
 {
-	int i ;
-	
-	for (i = location; i < (sizeof(str)-1); i++)
+	int i;
+
+	for (i = location; i < 6; i++)
 	{
 		str[i] = str[i + 1];
 	}
 
-	str[sizeof(str) - 1] = 0;
-	
+	str[6] = 0;
+
 }
 
-Float Getnumber(char* str, int* i)
+void clearnumber(char * number)
+{
+
+	int i = 0;
+	for (i = 0; i < strlen(number); i++)
+	{
+		number[i] = '0';
+	}
+	number[strlen(number)] = '/0';
+}
+
+
+Float Getnumber(char* str, int *i)
 {
 	Float Value;
 	int dot = 1;
 	int y = 0;
-	char *number = (char*)malloc(strlen(str));
-	for (y = 0; y < strlen(number); y++)
-
-
-
-		y = 1;
+	char *number = (char*)malloc(strlen(str) + 1);
+	number[strlen(str)] = '/0';
+	clearnumber(number)
+			y = 1;
 	number[0] = str[*i];
-	i++;
+	*i++;
 	while (*i < strlen(str))
 	{
 		if (Isnumber(str[*i]))
 		{
 			number[y] = str[*i];
 			y++;
-			i++;
+			*i++;
 		}
 		else if (Isdot((str[*i])) && dot)
 		{
 			number[y] = str[*i];
 			dot--;
 			y++;
-			i++;
+			*i++;
 		}
 		else
 		{
@@ -104,20 +116,20 @@ Float Getnumber(char* str, int* i)
 			return Value;
 		}
 	}
-	Value = char_to_float(number);
+	Value = char_to_number(number);
 	return Value;
 
 
 }
 
 
-Char GetOperation(char* str, int* i)
-{ 
-	Char operat; 
-	if (str[*i] == '-' || str[*i] == '+' || str[*i] == '*' || str[*i] == '/' || str[*i] == '%')
+Char GetOperation(char* str, int i)
+{
+	Char operat;
+	if (str[i] == '-' || str[i] == '+' || str[i] == '*' || str[i] == '/' || str[i] == '%')
 	{
 		operat.error = 0;
-		operat.value = str[*i];
+		operat.value = str[i];
 		return operat;
 	}
 	else
@@ -129,26 +141,30 @@ Char GetOperation(char* str, int* i)
 
 }
 
-void clearnumber(char * number)
+
+int Isnumber(char r)
 {
-	
-	int i = 0;
-	for (i = 0; i < strlen(number); i++)
+	if (r >= '0' && r <= '9')
 	{
-		number[i] = '0';
+		return 1;
+	}
+	else
+	{
+		return 0;
 	}
 }
 
-void calc( float numbers[] , operantion op [] )
-{
-	int i; 
 
-	for (i = 0; i < sizeof(op); i++)
+void calc(float numbers[], operantion op[])
+{
+	int i;
+
+	for (i = 0; i < 6; i++)
 	{
 		if (op[i].operant == '*')
 		{
 			numbers[op[i].position - 1] = numbers[op[i].position - 1] * numbers[op[i].position];
-			
+
 		}
 		else if (op[i].operant == '/')
 		{
@@ -159,35 +175,43 @@ void calc( float numbers[] , operantion op [] )
 			}
 			numbers[op[i].position - 1] = numbers[op[i].position - 1] / numbers[op[i].position];
 		}
-		/*else if (op[i].operant == '%')
-		{   
-			int y = int(numbers[op[i].position - 1] / numbers[op[i].position]);
-
-			numbers[op[i].position - 1] = numbers[op[i].position - 1] / numbers[op[i].position];
-		}*/
+		else if (op[i].operant == '%')
+		{
+			if (numbers[op[i].position == 0])
+			{
+				printf("error");
+				return;
+			}
+		int y = int(numbers[op[i].position - 1] / numbers[op[i].position]);
+		numbers[op[i].position - 1] = numbers[op[i].position - 1] / numbers[op[i].position];
+		}
 		else{ break; }
 		removeItem(numbers, op[i].position);
 		subtract_List_Operation(op);
 	}
-	float result ;
+	float result;
 	result = 0;
 	for (i = 0; i < sizeof(numbers); i++)
 	{
 		result = result + numbers[i];
 	}
 	printf("%f", result);
-	
+
 }
+
+
+
+
 
 int calculator()
 {
 	int numposition = 0;
 	int Operation_Position = 1;
 	int operantnum = 0;
-	float * A = (float*)malloc(6*sizeof(float));
+	float A[6];
 	int i = 0;
 
-	
+
 	operantion numericop[6];
 
 	operantion oper;
@@ -198,17 +222,16 @@ int calculator()
 	{
 		numericop[i] = oper;
 	}
-
-	char *op = NULL;
 	printf("Expression:");
-	readline(op);
-	char *number = (char*)malloc(strlen(op));
+	char *op  = readline("");
+	char *number = (char*)malloc(strlen(op)+1);
+	number[strlen(op)] = '/0';
 	clearnumber(number);
 	i = 0;
-	if (!(op[0] != '-' ||  Isnumber(op[0])) )
+	if (!(op[0] != '-' || Isnumber(op[0])))
 	{
-		 printf("error");
-		 return -1;
+		printf("error");
+		return -1;
 	}
 	if (!(Isnumber(op[strlen(op) - 1]) || Isdot(op[strlen(op) - 1])))
 	{
@@ -218,13 +241,13 @@ int calculator()
 
 	while (i < strlen(op))
 	{
-		Float answer_num = Getnumber(op, *i);
+		Float answer_num = Getnumber(op, &i);
 		if (answer_num.error)
 		{
 			printf("error");
 			return -1;
 		}
-		else 
+		else
 		{
 			A[numposition] = answer_num.number;
 			numposition++;
@@ -233,7 +256,7 @@ int calculator()
 		{
 			break;
 		}
-		Char answer_char  = GetOperation(op, *i);
+		Char answer_char = GetOperation(op, i);
 		if (answer_char.error)
 		{
 			printf("error");
@@ -246,12 +269,12 @@ int calculator()
 				i++;
 			}
 			else if (!(answer_char.value == '-'))
-			{ 
+			{
 				numericop[operantnum].operant = answer_char.value;
 				numericop[operantnum].position = Operation_Position;
 				operantnum++;
 				i++;
-			    
+
 			}
 			Operation_Position++;
 		}
