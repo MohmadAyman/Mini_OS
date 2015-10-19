@@ -79,9 +79,9 @@ Float Getnumber(char* str, int *i)
 	int dot = 1;
 	int y = 1;
 	char number[100];
-	for(i = 0 ; i < 100; i++)
+	for(x = 0 ;x < 100; i++)
 	{
-	number[i] = '0';	
+	number[x] = '0';	
 	}
 	
 	number[strlen(str)] = '\0';
