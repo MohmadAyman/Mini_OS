@@ -154,7 +154,7 @@ void calc(float numbers[], operantion op[])
 		}
 		else if (op[i].operant == '/')
 		{
-			if (numbers[op[i].position == 0])
+			if (numbers[op[i].position ] == 0)
 			{
 				cprintf("error");
 				return;
@@ -163,7 +163,7 @@ void calc(float numbers[], operantion op[])
 		}
 		else if (op[i].operant == '%')
 		{
-			if (numbers[op[i].position == 0])
+			if (numbers[op[i].position ] == 0)
 			{
 				cprintf("error");
 				return;
