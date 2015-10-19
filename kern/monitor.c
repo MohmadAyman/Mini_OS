@@ -98,11 +98,12 @@ first_lab(int argc, char **argv, struct Trapframe *tf)
 //		out=(char*)a;
 ///////////////////////////////////////// */
 char *arg=NULL;
+float b=0;
 	arg=readline("");
 	int len=strlen(arg);
 	short neg = 0;
 	int i=0;
-	double a = 0;
+	float a = 0;
 
 	Float retval;
 	retval.error=0;
@@ -119,7 +120,7 @@ char *arg=NULL;
 			a = a + (*(arg+1) - '0') * 0.1;
 				if ((arg+2)!= NULL)
 				{
-								a = a + (*(arg+2) - '0') * 0.1;
+					a = a + (*(arg+2) - '0') * 0.1;
 				}
 				else
 				{
@@ -127,12 +128,14 @@ char *arg=NULL;
 					return 0;
 				}
 			retval.number=a;
-			cprintf("entered val %f",a);
+			goto ifnegative;
 			return retval.number;
 		}
 		if (*(arg)=='-')
 		{
 			neg = 1;
+			len--;
+			goto argplus;
 		}
 		else if (*(arg) < '0' || (*(arg) > '9'))
 		{
@@ -144,19 +147,22 @@ char *arg=NULL;
 		// BUG: if power equals zero, the point disappears ?!
 		a =  powerbase(10,len-i) / 10 * (*(arg) - '0') + a;
 		i++;
-		arg=arg+1;
+	argplus: arg=arg+1;
 	}
-
+ifnegative:
 	if (neg==1)
 	{
-		float b=a*-1;
+		b=-3648;
+		b=a*-1;
 		retval.number=b;
 	}
 	else
 	{
 		retval.number=a;
 	}
-	cprintf("entered val %f",a);
+ 
+	cprintf("entered val %f",b);
+
 	return 0;
 }
 
