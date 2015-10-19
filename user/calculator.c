@@ -71,26 +71,20 @@ void removeItem(float str[], int location)
 
 }
 
-void clearnumber(char * number)
-{
-
-	int i = 0;
-	for (i = 0; i < strlen(number); i++)
-	{
-		number[i] = '0';
-	}
-	number[strlen(number)] = '\0';
-}
 
 
 Float Getnumber(char* str, int *i)
-{
+{       int x = 0;
 	Float Value;
 	int dot = 1;
 	int y = 1;
 	char number[100];
+	for(i = 0 ; i < 100; i++)
+	{
+	number[i] = '0';	
+	}
+	
 	number[strlen(str)] = '\0';
-	clearnumber(number);
 	number[0] = str[*i];
 	*i++;
 	while (*i < strlen(str))
@@ -214,9 +208,12 @@ int calculator()
 	}
 	cprintf("Expression:");
 	char *op  = readline("");
-	char number[256];
+	char number[100];
+	for(i = 0 ; i < 100; i++)
+	{
+	number[i] = '0';	
+	}
 	number[strlen(op)] = '\0';
-	clearnumber(number);
 	i = 0;
 	if (!(op[0] != '-' || Isnumber(op[0])))
 	{
