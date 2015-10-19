@@ -22,14 +22,22 @@ void subtract_List_Operation(operantion op[])
 
 int Isoperation(char r)
 {
+	cprintf("error inside is operation");
 	if (r == '+' || r == '-' || r == '*' || r == '/' || r == '%')
 	{
+				cprintf(" error inside isoperation : Return 1");
+
 		return 1;
 	}
 	else
 	{
+				cprintf(" error inside isoperation : Return 0");
+
 		return 0;
 	}
+					cprintf(" error inside isoperation : Return 0");
+
+	return 0;
 }
 
 
@@ -37,24 +45,39 @@ int Isnumber(char r)
 {
 	if (r >= '0' && r <= '9')
 	{
+		cprintf(" error inside isnumber : Return 1");
+
 		return 1;
 	}
 	else
 	{
+	cprintf(" error inside isnumber : Return 0");
+
 		return 0;
 	}
+	return 0;
+
+		cprintf(" error inside isnumber");
 }
 
 int Isdot(char r)
 {
+	cprintf("error inside isdot");
 	if (r == '.')
 	{
+				cprintf(" error inside Isdot : Return 1");
+
 		return 1;
 	}
 	else
 	{
+			cprintf(" error inside Isdot : Return 0");
+
 		return 0;
 	}
+				cprintf(" error inside Isdot : Return 0");
+
+	return 0;
 
 }
 
@@ -95,38 +118,45 @@ Float Getnumber(char* str, int *i)
 	*i++;
 	while (*i < strlen(str))
 	{
+		cprintf("inside Getnumber loop");
 		if (Isnumber(str[*i]))
 		{
+			cprintf("first number");
 			number[y] = str[*i];
 			y++;
 			*i++;
 		}
-		else if (Isdot((str[*i])) && dot)
+		cprintf("is a dot error");
+		if (Isdot((str[*i])) && dot)
 		{
+			cprintf("is a dot");
+
 			number[y] = str[*i];
 			dot--;
 			y++;
 			*i++;
 		}
-		else if ( Isoperation(str[*i]) )
+		cprintf("isoperation error");
+		if ( Isoperation(str[*i]) )
 	        {
-			if (dot)
-		             {
-	         	number[y] = '.';
-		             }
-		             break;
+			    cprintf("is operation");
+
+				if (dot)
+			    {
+		         	number[y] = '.';
+			    }
+		            break;
 			}
-		else
-		{
+			
+			cprintf("get number error inside Getnuber");
 			Value.error = 1;
 			Value.number = 1;
 			return Value;
-		}
 	}
+	cprintf("*i > strlen(str)");
 	Value = char_to_float(number);
+	cprintf("the returned float %f",Value.number);
 	return Value;
-
-
 }
 
 Char GetOperation(char* str, int i)
@@ -230,7 +260,9 @@ int calculator()
 
 	while (i < strlen(op))
 	{
+		cprintf("inside the main loop, no errors \n");
 		Float answer_num = Getnumber(op, &i);
+		cprintf("getnumber error solved");
 		if (answer_num.error)
 		{
 			cprintf("error");
@@ -238,8 +270,10 @@ int calculator()
 		}
 		else
 		{
+			cprintf("in else in calculator");
 			A[numposition] = answer_num.number;
 			numposition++;
+			cprintf("sucssecfuly got the float number %f",answer_num.number);
 		}
 		if (i == strlen(op))
 		{
