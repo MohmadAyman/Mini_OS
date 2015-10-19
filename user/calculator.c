@@ -89,8 +89,8 @@ Float Getnumber(char* str, int *i)
 	int dot = 1;
 	int y = 0;
 	char *number = (char*)malloc(strlen(str) + 1);
-	number[strlen(str)] = '/0';
-	clearnumber(number)
+	number[strlen(str)] = '\0';
+	clearnumber(number);
 			y = 1;
 	number[0] = str[*i];
 	*i++;
@@ -116,42 +116,10 @@ Float Getnumber(char* str, int *i)
 			return Value;
 		}
 	}
-	Value = char_to_number(number);
+	Value = char_to_float(number);
 	return Value;
 
 
-}
-
-
-Char GetOperation(char* str, int i)
-{
-	Char operat;
-	if (str[i] == '-' || str[i] == '+' || str[i] == '*' || str[i] == '/' || str[i] == '%')
-	{
-		operat.error = 0;
-		operat.value = str[i];
-		return operat;
-	}
-	else
-	{
-		operat.error = 1;
-		operat.value = '0';
-		return operat;
-	}
-
-}
-
-
-int Isnumber(char r)
-{
-	if (r >= '0' && r <= '9')
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
 }
 
 
@@ -199,10 +167,6 @@ void calc(float numbers[], operantion op[])
 
 }
 
-
-
-
-
 int calculator()
 {
 	int numposition = 0;
@@ -225,7 +189,7 @@ int calculator()
 	printf("Expression:");
 	char *op  = readline("");
 	char *number = (char*)malloc(strlen(op)+1);
-	number[strlen(op)] = '/0';
+	number[strlen(op)] = '\0';
 	clearnumber(number);
 	i = 0;
 	if (!(op[0] != '-' || Isnumber(op[0])))
