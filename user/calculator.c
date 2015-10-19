@@ -210,6 +210,7 @@ int calculator()
 	{
 		numericop[i].operant ='0';
 		numericop[i].position = 0 ;
+		A[i] = 0;
 	}
 	cprintf("Expression:");
 	char *op  = readline("");
