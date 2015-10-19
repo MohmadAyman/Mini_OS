@@ -43,6 +43,7 @@ int Isoperation(char r)
 
 int Isnumber(char r)
 {
+	cprintf("%c",r);
 	if (r >= '0' && r <= '9')
 	{
 		cprintf(" error inside isnumber : Return 1");
@@ -116,9 +117,11 @@ Float Getnumber(char* str, int *i)
 	clearnumber(number);
 	number[0] = str[*i];
 	*i++;
+	cprintf("%d",strlen(str));
 	while (*i < strlen(str))
 	{
 		cprintf("inside Getnumber loop");
+		cprintf("Isnumber Argument %c",str[*i]);
 		if (Isnumber(str[*i]))
 		{
 			cprintf("first number");
@@ -147,7 +150,7 @@ Float Getnumber(char* str, int *i)
 			    }
 		            break;
 			}
-			
+
 			cprintf("get number error inside Getnuber");
 			Value.error = 1;
 			Value.number = 1;
