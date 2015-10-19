@@ -108,14 +108,14 @@ Float Getnumber(char* str, int *i)
 			y++;
 			*i++;
 		}
-		else if ( Isoperation(str[*i])) )
+		else if ( Isoperation(str[*i]) )
 	        {
-		if (dot)
-	             {
-         	number[y] = '.';
-	             }
-	             break;
-		}
+			if (dot)
+		             {
+	         	number[y] = '.';
+		             }
+		             break;
+			}
 		else
 		{
 			Value.error = 1;

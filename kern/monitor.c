@@ -33,7 +33,8 @@ static struct Command commands[] = {
 /***** Implementations of basic kernel monitor commands *****/
 int calca(int argc, char **argv, struct Trapframe *tf)
 {
-	return calculator();
+	int i=calculator();
+	return 0;
 }
 
 int
