@@ -121,6 +121,13 @@ Float Getnumber(char* str, int *i)
 		}
 	}
 	number[*i-j+1]='\0';
+	int check ; 
+	for (check=0 ; check < *i-j+1 ; check++)
+	{
+		cprintf("%c",number[check]);
+	}
+	cprintf("\n");
+	cprintf("length %d",strlen(number));
 	Value = char_to_float(number);
 	return Value;
 }
@@ -179,7 +186,7 @@ void calc(float numbers[], operantion op[])
 	}
 	float result;
 	result = 0;
-	for (i = 0; i < sizeof(numbers); i++)
+	for (i = 0; i <6; i++)
 	{
 		result = result + numbers[i];
 	}
@@ -216,7 +223,7 @@ int calculator()
 	}
 	number[strlen(op)] = '\0';
 	i = 0;
-	if (!(op[0] != '-' || Isnumber(op[0])))
+	if (!(op[0] == '-' || Isnumber(op[0])))
 	{
 		cprintf("error");
 		return -1;
@@ -233,7 +240,7 @@ int calculator()
 		Float answer_num = Getnumber(op, &i);
 		if (answer_num.error)
 		{
-			cprintf("error");
+			cprintf("error number is wrong");
 			return -1;
 		}
 		else
@@ -248,7 +255,7 @@ int calculator()
 		Char answer_char = GetOperation(op, i);
 		if (answer_char.error)
 		{
-			cprintf("error");
+			cprintf("error operation is not true");
 			return -1;
 		}
 		else
@@ -268,6 +275,11 @@ int calculator()
 		}
 
 	}
+	int u=0;
+	for(u;u<6;u++){
+	cprintf("op %c pos %d",numericop[u].operant,numericop[u].position);	
+	}
+	
 	cprintf(" float A array %f\n %f\n %f\n %f\n %f\n %f\n",A[0],A[1],A[2],A[3],A[4],A[5]);
 	calc(A, numericop);
 	return 0;

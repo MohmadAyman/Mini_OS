@@ -31,24 +31,28 @@ Float char_to_float(char* arg)
     {
         if (*(arg) == '.')
         {
-                if (!(arg+1))
+                 //if (*(arg+2)!='\0')
+                   if (*(arg+1) =='\0')
                 {
+                    retval.error=1;
                     return retval;
                 }
-                a = a + (*(arg+1) - '0') * 0.1;
+                 if (*(arg+1)!='\0')
+                {
+                      if (*(arg+2)!='\0')
+                    {
+                        a = a/1000 + (*(arg+1) - '0') * 0.1 +  (*(arg+2) - '0') * 0.01;
+                    }
+                    else
+
+                        a = a/100 + (*(arg+1) - '0') * 0.1;
+                }
                 retval.number=a;
                 goto ifnegative;
-                if ((arg+2))
-                {
-                    a = a + (*(arg+2) - '0') * 0.1;
-                }
-                else
-                {
                     retval.error=1; 
                     return retval;
-                }
-        }
-
+         }
+    
         if (*(arg)=='-'&& i==0)
         {
             neg = 1;
@@ -66,7 +70,9 @@ Float char_to_float(char* arg)
         a =  powerbase(10,len-i) / 10 * (*(arg) - '0') + a;
         i++;
         argplus: arg=arg+1;
-    }
+    }   
+  
+
 ifnegative:
     if (neg==1)
     {
