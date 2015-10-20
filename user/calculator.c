@@ -75,7 +75,6 @@ void removeItem(float str[], int location)
 
 Float Getnumber(char* str, int *i)
 {   
-	cprintf("inside getnumber");    
 	int x = 0;
 	Float Value;
 	int dot = 1;
@@ -85,19 +84,19 @@ Float Getnumber(char* str, int *i)
 	{
 	number[x] = '0';
 	}
-	cprintf("before before Getnumber loop");
 	number[strlen(str)] = '\0';
 	number[0] = str[*i];
 	*i=*i+1;
-	cprintf("before Getnumber loop");
+	int j=*i;
 	while (*i < strlen(str))
 	{
-	cprintf("inside Getnumber loop");
+		cprintf("I form inside Getnumber %d\n",*i);
 		if (Isnumber(str[*i]))
 		{
 			number[y] = str[*i];
 			y++;
 			*i=*i+1;
+
 		}
 		else if (Isdot((str[*i])) && dot)
 		{
@@ -121,10 +120,9 @@ Float Getnumber(char* str, int *i)
 			return Value;
 		}
 	}
+	number[*i-j+1]='\0';
 	Value = char_to_float(number);
 	return Value;
-
-
 }
 
 Char GetOperation(char* str, int i)
@@ -231,9 +229,8 @@ int calculator()
 
 	while (i < strlen(op))
 	{
-		cprintf("inside main loop");
+		cprintf("I form inside Calculator %d\n",i);
 		Float answer_num = Getnumber(op, &i);
-		cprintf("outside getnumber");
 		if (answer_num.error)
 		{
 			cprintf("error");
